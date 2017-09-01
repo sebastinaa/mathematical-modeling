@@ -21,7 +21,6 @@ raw = raw(:,[3,4,5,6,7,8,9,10]);
 data = reshape([raw{:}],size(raw));
 m = size(data, 1);  % 数据条数。
 
-
 %% 将导入的数组分配给列变量名称
 TeacherName = cellVectors(:,1);   % 教师姓名。
 CourseName = cellVectors(:,2);    % 评估内容(课程名)。
@@ -36,6 +35,7 @@ x_6 = data(:,8);            % 我从这门课学到许多东西并对该学科更感兴趣。
 x_7 = Number_Of_Judges ./ Class_Size; % 参评率。
 
 score = [x_1, x_2, x_3, x_4, x_5, x_6, x_7];
+% score = [x_1, x_2, x_3, x_4, x_5, x_6]; % 不采用参评率。
 
 %% 计算老师数量
 UniqueTeacherName = unique(TeacherName);    % 计算老师人数。
@@ -114,6 +114,7 @@ for i = 1:UniqueCourseNameNum % 循环每中课程。
         end % 循环完所有记录，则已经分好类。
     end
     temp = [temp(:, 3:end), temp(:, 1) ./ temp(:, 2)];
+%     temp = [temp(:, 3:end)]; % 不采用参评率。
     X_new = [X_new; zscore(temp)];  % 加入新的矩阵中。
 end
 
@@ -125,7 +126,6 @@ MeanCourse = [MeanCourse, P];
 result4(1, 1:2) = {'课程名', '授课教师数'};
 result4(2:6, 1) = UniqueCourseName;
 result4(2:6, 2) = num2cell(count);
-
 
 %% 显示
 featureNames = {
