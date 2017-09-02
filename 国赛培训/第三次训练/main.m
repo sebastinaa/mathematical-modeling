@@ -32,10 +32,10 @@ x_3 = data(:,5);            % 多媒体制作优秀?板书规范而清晰。
 x_4 = data(:,6);            % 尊重并且公平公正对待每一个学生。
 x_5 = data(:,7);            % 愿意在课堂外通过多种方式帮助学生。
 x_6 = data(:,8);            % 我从这门课学到许多东西并对该学科更感兴趣。
-x_7 = Number_Of_Judges ./ Class_Size; % 参评率。
 
-score = [x_1, x_2, x_3, x_4, x_5, x_6, x_7];
-% score = [x_1, x_2, x_3, x_4, x_5, x_6]; % 不采用参评率。
+
+% score = [x_1, x_2, x_3, x_4, x_5, x_6, x_7];
+score = [x_1, x_2, x_3, x_4, x_5, x_6]; % 不采用参评率。
 
 %% 计算老师数量
 UniqueTeacherName = unique(TeacherName);    % 计算老师人数。
@@ -60,19 +60,19 @@ vec_1_2 =vec_1 .* f; % 修改特征向量的符号，使得每个向量的分量和为正。
 
 %% 选取主成分个数
 
-num_1 = 2;
+num_1 = 1;
 
 df_1 = X_standard_1 * vec_1_2(:,1:num_1);
 
-p1_1 = df_1(:, 1)';
-p2_1 = df_1(:, 2)';
+% p1_1 = df_1(:, 1)';
+% p2_1 = df_1(:, 2)';
 
-figure;
-scatter(p1_1, p2_1,'o');
-title('选取两个主成分之后绘制散点图')
-xlabel('主成分1')
-ylabel('主成分2')
-text(p1_1, p2_1, TeacherName);
+% figure;
+% scatter(p1_1, p2_1,'o');
+% title('选取两个主成分之后绘制散点图')
+% xlabel('主成分1')
+% ylabel('主成分2')
+% text(p1_1, p2_1, TeacherName);
 
 tf_1 = df_1 * rate_1(1:num_1) / 100; % 计算综合得分。
 
@@ -113,8 +113,8 @@ for i = 1:UniqueCourseNameNum % 循环每中课程。
             temp = [temp; X(j, :)];
         end % 循环完所有记录，则已经分好类。
     end
-    temp = [temp(:, 3:end), temp(:, 1) ./ temp(:, 2)];
-%     temp = [temp(:, 3:end)]; % 不采用参评率。
+%     temp = [temp(:, 3:end), temp(:, 1) ./ temp(:, 2)];
+    temp = [temp(:, 3:end)]; % 不采用参评率。
     X_new = [X_new; zscore(temp)];  % 加入新的矩阵中。
 end
 
@@ -159,19 +159,19 @@ f_2 = repmat(sign(sum(vec_2)), size(vec_2, 1), 1); % 构造与vec相同维数的符号矩阵
 
 vec_2_2 =vec_2 .* f_2; % 修改特征向量的符号，使得每个向量的分量和为正。
 
-num_2 = 2; % 主成分的份数。
+num_2 = 1; % 主成分的份数。
 
 df_2 = X_standard_2 * vec_2_2(:,1:num_2); % 降维后的主成分。
 
-p1_2 = df_2(:, 1)';
-p2_2 = df_2(:, 2)';
-
-figure;
-scatter(p1_2, p2_2,'o');
-text(p1_2, p2_2, TeacherName);
-title('分类之后两个主成分的散点图');
-xlabel('主成分1');
-ylabel('主成分2');
+% p1_2 = df_2(:, 1)';
+% p2_2 = df_2(:, 2)';
+% 
+% figure;
+% scatter(p1_2, p2_2,'o');
+% text(p1_2, p2_2, TeacherName);
+% title('分类之后两个主成分的散点图');
+% xlabel('主成分1');
+% ylabel('主成分2');
 
 tf_2 = df_2 * rate_2(1:num_2) / 100; % 计算综合得分，根据主成分及其内容。
 
